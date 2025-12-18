@@ -8,12 +8,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// 1. Database Connection
 const db = mysql.createConnection({
-    host: process.env.DB_HOST,      // Uses value from .env
-    user: process.env.DB_USER,      // Uses value from .env
-    password: process.env.DB_PASSWORD, // Uses value from .env
-    database: process.env.DB_NAME   // Uses value from .env
+    host: process.env.DB_HOST,      
+    user: process.env.DB_USER,      
+    password: process.env.DB_PASSWORD, 
+    database: process.env.DB_NAME   
 });
 
 db.connect(err => {
@@ -24,7 +23,7 @@ db.connect(err => {
     console.log('Connected to MySQL database.');
 });
 
-// 2. API Route: Get all Requests
+
 app.get('/api/requests', (req, res) => {
     const sql = "SELECT * FROM requests";
     db.query(sql, (err, result) => {
@@ -33,7 +32,6 @@ app.get('/api/requests', (req, res) => {
     });
 });
 
-// 3. API Route: Submit a new Request
 app.post('/api/requests', (req, res) => {
     const sql = "INSERT INTO requests (user_name, contact, item_type, item_condition, estimated_value) VALUES (?)";
     const values = [
@@ -50,7 +48,6 @@ app.post('/api/requests', (req, res) => {
     });
 });
 
-// 4. Start Server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
