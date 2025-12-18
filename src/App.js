@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css'; // We will add styling in Step 3
+import './App.css'; 
 
 function App() {
-  // 1. State for storing the list of requests
   const [requests, setRequests] = useState([]);
 
-  // 2. State for the form inputs
   const [formData, setFormData] = useState({
     user_name: '',
     contact: '',
@@ -15,14 +13,14 @@ function App() {
     estimated_value: ''
   });
 
-  // 3. Fetch data when the app loads
+
   useEffect(() => {
     fetchRequests();
   }, []);
 
   const fetchRequests = async () => {
     try {
-      // Make sure your backend is running on port 5000!
+
       const response = await axios.get('http://localhost:5001/api/requests');
       setRequests(response.data);
     } catch (error) {
@@ -30,19 +28,17 @@ function App() {
     }
   };
 
-  // 4. Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 5. Handle Form Submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:5001/api/requests', formData);
       alert('Request Submitted Successfully!');
-      fetchRequests(); // Refresh the table
-      // Reset form
+      fetchRequests(); 
       setFormData({
         user_name: '',
         contact: '',
